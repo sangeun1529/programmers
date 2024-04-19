@@ -106,3 +106,42 @@ class Solution0003 {
         return minElem
     }
 }
+
+/**
+ * https://school.programmers.co.kr/learn/courses/30/lessons/172927
+ */
+class Solution0004 {
+    fun solution(picks: IntArray, minerals: Array<String>) = if (minerals.size > picks.sum() * 5) {
+        minerals.slice(0 until picks.sum() * 5).toList().chunked(5)
+    } else {
+        minerals.toList().chunked(5)
+    }.map { minerals ->
+        val mineralsCount = intArrayOf(0, 0, 0)
+        minerals.forEach {
+            when (it) {
+                "diamond" -> mineralsCount[0]++
+                "iron" -> mineralsCount[1]++
+                "stone" -> mineralsCount[2]++
+            }
+        }
+        mineralsCount
+    }.sortedWith(compareByDescending<IntArray> { it[0] }.thenByDescending { it[1] }.thenByDescending { it[2] })
+        .sumOf {
+            when {
+                picks[0] != 0 -> {
+                    picks[0] -= 1
+                    it[0] + it[1] + it[2]
+                }
+
+                picks[1] != 0 -> {
+                    picks[1] -= 1
+                    it[0] * 5 + it[1] + it[2]
+                }
+
+                else -> {
+                    picks[2] -= 1
+                    it[0] * 25 + it[1] * 5 + it[2]
+                }
+            }
+        }
+}
