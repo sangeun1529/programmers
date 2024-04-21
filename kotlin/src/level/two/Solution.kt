@@ -169,3 +169,30 @@ class Solution0005 {
         return cache[n]!!
     }
 }
+
+/**
+ * https://school.programmers.co.kr/learn/courses/30/lessons/42842
+ */
+class Solution0006 {
+    fun solution(brown: Int, yellow: Int): IntArray {
+        var answer = intArrayOf()
+
+        val area = brown + yellow
+        // 카펫의 꼭지점 개수 4
+        // 노란색 가로 * 2 + 노란색세로 *2 + 4 = 총 넓이이므로 브라운의 개수가 결정.
+        // 노란색 가로 + 2 = 가로길이
+        // 노란색 세로 + 2 = 세로길이
+        (1..yellow).forEach{ yellowWidth -> // 가로길이를 올려가며 브라운 개수와 같은 넓이를 구함.
+            val yellowHeight = yellow/yellowWidth
+            if(((yellowWidth * 2) + (yellowHeight * 2) + 4) == brown){
+                val brownWidth = yellowWidth + 2
+                val brownHeight = yellowHeight + 2
+                if(brownWidth >= brownHeight && brownWidth * brownHeight == area)
+                    answer = intArrayOf(brownWidth, brownHeight)
+
+            }
+        }
+
+        return answer
+    }
+}
