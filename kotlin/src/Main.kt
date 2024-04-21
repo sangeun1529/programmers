@@ -1,4 +1,4 @@
-import level.two.Solution0003
+import level.two.Solution0005
 
 /**
  * test 검증하여 디버깅이 필요할 경우 사용한다.
@@ -7,4 +7,5 @@ import level.two.Solution0003
  */
 fun main() {
     println("Hello World!")
+    println(Solution0005().solution(10))
 }
