@@ -125,23 +125,47 @@ class Solution0004 {
             }
         }
         mineralsCount
-    }.sortedWith(compareByDescending<IntArray> { it[0] }.thenByDescending { it[1] }.thenByDescending { it[2] })
-        .sumOf {
-            when {
-                picks[0] != 0 -> {
-                    picks[0] -= 1
-                    it[0] + it[1] + it[2]
-                }
+    }.sortedWith(compareByDescending<IntArray> { it[0] }.thenByDescending { it[1] }.thenByDescending { it[2] }).sumOf {
+        when {
+            picks[0] != 0 -> {
+                picks[0] -= 1
+                it[0] + it[1] + it[2]
+            }
 
-                picks[1] != 0 -> {
-                    picks[1] -= 1
-                    it[0] * 5 + it[1] + it[2]
-                }
+            picks[1] != 0 -> {
+                picks[1] -= 1
+                it[0] * 5 + it[1] + it[2]
+            }
 
-                else -> {
-                    picks[2] -= 1
-                    it[0] * 25 + it[1] * 5 + it[2]
-                }
+            else -> {
+                picks[2] -= 1
+                it[0] * 25 + it[1] * 5 + it[2]
             }
         }
+    }
+}
+
+/**
+ * https://school.programmers.co.kr/learn/courses/30/lessons/12945
+ */
+class Solution0005 {
+    fun solution(n: Int) = fibonacci(n)
+
+    private fun fibonacciFail(n: Int): Int { // 재귀를 한다면 n^n 의 시간복잡도
+        return when (n) {
+            0 -> 0
+            1 -> 1
+            else -> fibonacciFail(n - 1) + fibonacciFail(n - 2)
+        }
+    }
+
+    private fun fibonacci(n: Int): Int {
+        if(n < 2) return n
+        val cache = mutableMapOf(1 to 1, 2 to 1)
+        (3..n).forEach {
+                cache[it] = (cache[it - 1]!! + cache[it - 2]!!) % 1234567
+            }
+
+        return cache[n]!!
+    }
 }
