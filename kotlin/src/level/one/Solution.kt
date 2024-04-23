@@ -45,3 +45,10 @@ class Solution0001 {
         }
     }
 }
+
+/**
+ * https://school.programmers.co.kr/learn/courses/30/lessons/12925
+ */
+class Solution0002 {
+    fun solution(s: String) = s.toInt()
+}
