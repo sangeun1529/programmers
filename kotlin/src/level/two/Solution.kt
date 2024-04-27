@@ -198,21 +198,30 @@ class Solution0006 {
 }
 
 /**
- * https://school.programmers.co.kr/learn/courses/30/lessons/42862
+ * https://school.programmers.co.kr/learn/courses/30/lessons/42860
  */
 class Solution0007 {
-    fun solution(n: Int, lost: IntArray, reserve: IntArray): Int {
-        val reserved: MutableList<Int> = reserve.sorted().filterNot { lost.contains(it) }.toMutableList()
-        val losted: MutableList<Int> = lost.sorted().filterNot { reserve.contains(it) }.toMutableList()
-        var answer = n - losted.size
+    fun solution(name: String): Int {
+        var answer = 0
 
-        for (target in losted) {
-            val rest = reserved.firstOrNull { it == target - 1 } ?: reserved.firstOrNull { it == target + 1 }
-            rest?.let {
-                reserved.remove(it)
-                answer++
-            }
+        val nameArr = name.toCharArray()
+
+        nameArr.forEach { // 상하 조이스틱
+            answer += getChangedCountBy(it)
         }
+
+        // 좌우 조이스틱...
+
         return answer
     }
+
+    private fun getChangedCountBy(target: Char) = if(target > 'M'){
+            'Z' - target + 1
+        }else{
+            target - 'A'
+        }
+}
+
+fun main() {
+    println(Solution0007().solution("JEROEN"))
 }

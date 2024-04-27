@@ -52,3 +52,24 @@ class Solution0001 {
 class Solution0002 {
     fun solution(s: String) = s.toInt()
 }
+
+
+/**
+ * https://school.programmers.co.kr/learn/courses/30/lessons/42862
+ */
+class Solution0003 {
+    fun solution(n: Int, lost: IntArray, reserve: IntArray): Int {
+        val reserved: MutableList<Int> = reserve.sorted().filterNot { lost.contains(it) }.toMutableList()
+        val losted: MutableList<Int> = lost.sorted().filterNot { reserve.contains(it) }.toMutableList()
+        var answer = n - losted.size
+
+        for (target in losted) {
+            val rest = reserved.firstOrNull { it == target - 1 } ?: reserved.firstOrNull { it == target + 1 }
+            rest?.let {
+                reserved.remove(it)
+                answer++
+            }
+        }
+        return answer
+    }
+}
