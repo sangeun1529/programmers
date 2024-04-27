@@ -160,11 +160,11 @@ class Solution0005 {
     }
 
     private fun fibonacci(n: Int): Int {
-        if(n < 2) return n
+        if (n < 2) return n
         val cache = mutableMapOf(1 to 1, 2 to 1)
         (3..n).forEach {
-                cache[it] = (cache[it - 1]!! + cache[it - 2]!!) % 1234567
-            }
+            cache[it] = (cache[it - 1]!! + cache[it - 2]!!) % 1234567
+        }
 
         return cache[n]!!
     }
@@ -182,17 +182,37 @@ class Solution0006 {
         // 노란색 가로 * 2 + 노란색세로 *2 + 4 = 총 넓이이므로 브라운의 개수가 결정.
         // 노란색 가로 + 2 = 가로길이
         // 노란색 세로 + 2 = 세로길이
-        (1..yellow).forEach{ yellowWidth -> // 가로길이를 올려가며 브라운 개수와 같은 넓이를 구함.
-            val yellowHeight = yellow/yellowWidth
-            if(((yellowWidth * 2) + (yellowHeight * 2) + 4) == brown){
+        (1..yellow).forEach { yellowWidth -> // 가로길이를 올려가며 브라운 개수와 같은 넓이를 구함.
+            val yellowHeight = yellow / yellowWidth
+            if (((yellowWidth * 2) + (yellowHeight * 2) + 4) == brown) {
                 val brownWidth = yellowWidth + 2
                 val brownHeight = yellowHeight + 2
-                if(brownWidth >= brownHeight && brownWidth * brownHeight == area)
-                    answer = intArrayOf(brownWidth, brownHeight)
+                if (brownWidth >= brownHeight && brownWidth * brownHeight == area) answer =
+                    intArrayOf(brownWidth, brownHeight)
 
             }
         }
 
+        return answer
+    }
+}
+
+/**
+ * https://school.programmers.co.kr/learn/courses/30/lessons/42862
+ */
+class Solution0007 {
+    fun solution(n: Int, lost: IntArray, reserve: IntArray): Int {
+        val reserved: MutableList<Int> = reserve.sorted().filterNot { lost.contains(it) }.toMutableList()
+        val losted: MutableList<Int> = lost.sorted().filterNot { reserve.contains(it) }.toMutableList()
+        var answer = n - losted.size
+
+        for (target in losted) {
+            val rest = reserved.firstOrNull { it == target - 1 } ?: reserved.firstOrNull { it == target + 1 }
+            rest?.let {
+                reserved.remove(it)
+                answer++
+            }
+        }
         return answer
     }
 }
