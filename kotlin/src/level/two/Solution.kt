@@ -215,13 +215,35 @@ class Solution0007 {
         return answer
     }
 
-    private fun getChangedCountBy(target: Char) = if(target > 'M'){
-            'Z' - target + 1
-        }else{
-            target - 'A'
-        }
+    private fun getChangedCountBy(target: Char) = if (target > 'M') {
+        'Z' - target + 1
+    } else {
+        target - 'A'
+    }
 }
 
+/**
+ *
+ */
+class Solution0008 {
+    fun solution(sequence: IntArray, k: Int): IntArray {
+        sequence.reverse()
+
+        (0..sequence.size - 1).forEach end@{ i ->
+            (i..sequence.size - 1).forEach { j ->
+                if (getSumBy(sequence, i, j, k)) {
+                    return intArrayOf(sequence.size - 1 - j, sequence.size - 1 - i)
+                }
+            }
+        }
+        return intArrayOf()
+    }
+
+    fun getSumBy(sequence: IntArray, from: Int, to: Int, k: Int) = (from..to).sumOf {
+        sequence[it]
+    } == k
+}
 fun main() {
-    println(Solution0007().solution("JEROEN"))
+    val a = Solution0008().solution(intArrayOf(1, 52, 36, 77, 4, 1, 1, 24, 25, 4),1)
+    println(a)
 }
