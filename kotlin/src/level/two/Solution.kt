@@ -1,5 +1,3 @@
-package level.two
-
 /**
  *
  * @author kkomac
@@ -243,7 +241,22 @@ class Solution0008 {
         sequence[it]
     } == k
 }
+
+/**
+ * https://school.programmers.co.kr/learn/courses/30/lessons/12953
+ */
+class Solution0009 {
+    fun solution(arr: IntArray): Int {
+        val max = arr.maxOrNull()!!
+        (1..Int.MAX_VALUE).forEach{ time ->
+            val leastCommonMultiple = max * time
+            if(arr.all { leastCommonMultiple % it == 0 }) return leastCommonMultiple
+        }
+        return -1
+    }
+}
+
 fun main() {
-    val a = Solution0008().solution(intArrayOf(1, 52, 36, 77, 4, 1, 1, 24, 25, 4),1)
+    val a = Solution0009().solution(intArrayOf(2,6,8,14))
     println(a)
 }
