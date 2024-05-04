@@ -1,3 +1,5 @@
+import kotlin.math.sign
+
 /**
  *
  * @author kkomac
@@ -248,15 +250,46 @@ class Solution0008 {
 class Solution0009 {
     fun solution(arr: IntArray): Int {
         val max = arr.maxOrNull()!!
-        (1..Int.MAX_VALUE).forEach{ time ->
+        (1..Int.MAX_VALUE).forEach { time ->
             val leastCommonMultiple = max * time
-            if(arr.all { leastCommonMultiple % it == 0 }) return leastCommonMultiple
+            if (arr.all { leastCommonMultiple % it == 0 }) return leastCommonMultiple
         }
         return -1
     }
 }
 
+/**
+ * https://school.programmers.co.kr/learn/courses/30/lessons/12985?language=kotlin
+ */
+class Solution0010 {
+    fun solution(n: Int, a: Int, b: Int) = recurse((1..n).map { it }.toIntArray(), a, b, 1)
+
+    private fun recurse(n: IntArray, me: Int, rival: Int, round: Int): Int {
+        val answer = mutableListOf<Int>()
+        for (i in n.indices step 2) {
+            when {
+                n[i] == me -> {
+                    if (n[i + 1] == rival) {
+                        return round
+                    }
+                    answer.add(me)
+                }
+
+                n[i] == rival -> {
+                    if (n[i + 1] == me) {
+                        return round
+                    }
+                    answer.add(rival)
+                }
+
+                else -> answer.add(n[i+1])
+            }
+        }
+        return recurse(answer.toIntArray(), me, rival, round + 1)
+    }
+}
+
 fun main() {
-    val a = Solution0009().solution(intArrayOf(2,6,8,14))
+    val a = Solution0010().solution(4*4*4*4*4*4*4*4, 102, 523)
     println(a)
 }
