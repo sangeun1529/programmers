@@ -200,7 +200,7 @@ class Solution0006 {
 /**
  * https://school.programmers.co.kr/learn/courses/30/lessons/42860
  */
-class Solution0007 {
+class Solution0007 { //TODO("좌우 조이스틱 추가구현 필요")
     fun solution(name: String): Int {
         var answer = 0
 
@@ -209,9 +209,7 @@ class Solution0007 {
         nameArr.forEach { // 상하 조이스틱
             answer += getChangedCountBy(it)
         }
-
         // 좌우 조이스틱...
-
         return answer
     }
 
