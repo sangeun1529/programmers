@@ -280,14 +280,48 @@ class Solution0010 {
                     answer.add(rival)
                 }
 
-                else -> answer.add(n[i+1])
+                else -> answer.add(n[i + 1])
             }
         }
         return recurse(answer.toIntArray(), me, rival, round + 1)
     }
 }
 
+/**
+ * https://school.programmers.co.kr/learn/courses/30/lessons/12914
+ */
+class Solution0011 {
+
+    var count = 0L
+    fun solution(n: Int): Long {
+        recurse(0, n)
+        return count * 1234567
+    }
+
+    fun recurse(i: Int, finish: Int) {
+        if (i == finish) {
+            count++
+        } else {
+            recurse(i + 1, finish)
+            if (i + 2 <= finish) recurse(i + 2, finish)
+        }
+    }
+    fun solutionFib(n: Int): Long { //핵심은 피보나치를 생각 했느냐 마느냐에 차이.
+        if(n == 1) return 1
+
+        val dp = Array(n){0}
+        dp[0] = 1
+        dp[1] = 2
+
+        for(i in 2 until n){
+            dp[i] = (dp[i-1] + dp[i-2]) % 1234567
+        }
+
+        return dp[n-1].toLong()
+    }
+}
+
 fun main() {
-    val a = Solution0010().solution(4*4*4*4*4*4*4*4, 102, 523)
+    val a = Solution0011().solution(3)
     println(a)
 }
