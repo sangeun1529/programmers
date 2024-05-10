@@ -1,4 +1,4 @@
-import kotlin.math.sign
+import java.util.*
 
 /**
  *
@@ -306,22 +306,58 @@ class Solution0011 {
             if (i + 2 <= finish) recurse(i + 2, finish)
         }
     }
-    fun solutionFib(n: Int): Long { //핵심은 피보나치를 생각 했느냐 마느냐에 차이.
-        if(n == 1) return 1
 
-        val dp = Array(n){0}
+    fun solutionFib(n: Int): Long { //핵심은 피보나치를 생각 했느냐 마느냐에 차이.
+        if (n == 1) return 1
+
+        val dp = Array(n) { 0 }
         dp[0] = 1
         dp[1] = 2
 
-        for(i in 2 until n){
-            dp[i] = (dp[i-1] + dp[i-2]) % 1234567
+        for (i in 2 until n) {
+            dp[i] = (dp[i - 1] + dp[i - 2]) % 1234567
         }
 
-        return dp[n-1].toLong()
+        return dp[n - 1].toLong()
+    }
+}
+
+/**
+ * https://school.programmers.co.kr/learn/courses/30/lessons/138476
+ */
+class Solution0012 {
+    fun solution(k: Int, tangerine: IntArray): Int {
+        var answer = 0
+        var capacity = k
+
+        sortMapByV(tangerine.groupBy { it }).forEach {
+            if(capacity >= it.value.size){
+                answer++
+                capacity -= it.value.size
+            }
+        }
+
+        return answer
+    }
+
+    fun sortMapByV(map: Map<Int, List<Int>>): LinkedHashMap<Int, List<Int>> {
+        val entries = LinkedList(map.entries)
+
+        entries.sortByDescending {
+            it.value.size
+        }
+
+
+        val result = LinkedHashMap<Int, List<Int>>()
+        for (entry in entries) {
+            result[entry.key] = entry.value
+        }
+
+        return result
     }
 }
 
 fun main() {
-    val a = Solution0011().solution(3)
+    val a = Solution0012().solution(6, intArrayOf(1,3,2,5,4,5,2,3))
     println(a)
 }
