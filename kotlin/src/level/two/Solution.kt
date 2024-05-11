@@ -331,7 +331,7 @@ class Solution0012 {
         var capacity = k
 
         sortMapByV(tangerine.groupBy { it }).forEach {
-            if(capacity >= it.value.size){
+            if (capacity >= it.value.size) {
                 answer++
                 capacity -= it.value.size
             }
@@ -357,7 +357,33 @@ class Solution0012 {
     }
 }
 
+/**
+ * https://school.programmers.co.kr/learn/courses/30/lessons/131701
+ */
+class Solution0013 {
+    fun solution(elements: IntArray): Int {
+        val answer = mutableSetOf<Int>()
+
+        (1..elements.size).forEach { // 1 ~ 공 사이즈까지
+            for (i in 0..elements.lastIndex) { // 처음 index 부터 저장
+                var count = 0
+                var sum = 0
+                var j = i
+                do {
+                    sum += elements[j]
+                    if (j == elements.lastIndex) j = 0
+                    else j++
+                    count++
+                } while (count < it)
+                answer.add(sum)
+            }
+        }
+
+        return answer.size
+    }
+}
+
 fun main() {
-    val a = Solution0012().solution(6, intArrayOf(1,3,2,5,4,5,2,3))
+    val a = Solution0013().solution(intArrayOf(7, 9, 1, 1, 4))
     println(a)
 }
